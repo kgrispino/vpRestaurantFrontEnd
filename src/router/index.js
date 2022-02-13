@@ -5,13 +5,12 @@ import SignupForm from '../views/SignupForm.vue'
 import LoginForm from '../views/LoginForm'
 import Menu from '../views/Menu'
 import Checkout from '../views/Checkout'
-// import { component } from 'vue/types/umd'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home
   },
@@ -36,14 +35,6 @@ const routes = [
     path: '/checkout',
     name: 'Checkout',
     component: Checkout
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 

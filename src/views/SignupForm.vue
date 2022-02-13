@@ -1,6 +1,7 @@
 <template>
     <div>
         <form class="form-bg" @submit.prevent="addAccount" >
+            <h1 class=error v-if="accountExists == true"> Username is taken</h1>
             <h1> Sign Up Form</h1>
             <div class="textbox-center">
                 <!-- <div class=form-spacing>
@@ -26,7 +27,7 @@
             <p><router-link :to="{name: 'Login' }">Login</router-link></p>
         </div>
         <!-- get accounts (debug) -->
-        <p>{{accounts}} </p>
+        <!-- <p>{{accounts}} </p> -->
         
     </div>
     
@@ -37,12 +38,9 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            // first_name: "",
-            // last_name: "",
-            // email: "",
-            // password: "",
             account: {},
             accounts: [],
+            accountExists: false
         }
     },
     mounted(){
@@ -51,9 +49,9 @@ export default {
     methods: {
         addAccount(){
             axios.post("http://localhost:8080/api/accounts/avail", this.account).then(response => {
-            var accountExists = response.data;
+            this.accountExists = response.data;
             console.log(response.data)
-            if (accountExists == false){
+            if (this.accountExists == false){
                 axios.post("http://localhost:8080/api/accounts/create", this.account)
                     .then(response => {
                         console.log(response.data);
@@ -114,5 +112,8 @@ input{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+.error {
+    color:red;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <h1> {{title}} </h1>
+    
     <router-view/>
     
   </div>
@@ -10,6 +10,7 @@
 
 <script>
 import Navbar from './components/Navbar.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -18,20 +19,30 @@ export default {
   },
   data(){
     return{
-      title: "Hello"
+      title: "Hello",
+      user: "please sign in"
     }
+  },
+  mounted(){
+    this.getUser();
+  },
+  methods:{
+    getUser(){
+            var name = localStorage.getItem("username");
+            var token = localStorage.getItem("token");
+            var payload = {"token": token, "username": name};
+            axios.post("http://localhost:8080/api/accounts/validate", payload)
+            .then(Response => {
+                if (Response.data == true){
+                    this.user = name;
+                }
+                else{
+                  console.log("please sign in");
+                }
+            }
+            )
+        }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
 

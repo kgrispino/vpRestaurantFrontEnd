@@ -1,6 +1,7 @@
 <template>
     <div>
         <form class="form-bg" @submit.prevent="checkAccount" >
+            <h1 class=error v-if="accountExists == false"> Username doesn't exist</h1>
             <h1> Log In</h1>
             <div class="textbox-center">
                 <div class=form-spacing>
@@ -12,7 +13,7 @@
             </div>
 
             <div class="submit">
-                <button> Create Account</button>
+                <button class="btn btn-primary"> Login</button>
             </div>
         </form>
         <div class=login-dialog>
@@ -29,7 +30,8 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            account: {}
+            account: {},
+            accountExists: true
         }
     },
     mounted(){
@@ -41,9 +43,15 @@ export default {
                 console.log(response.data.token)
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('username', this.account.username)
+                this.accountExists = true;
+                this.$router.push({name: 'Menu'})
             })
             .catch(e => {
-            console.log(e, "Account Details wrong or Doesn't Exist");});
+            console.log(e, "Account Details wrong or Doesn't Exist");
+            this.accountExists = false;
+            console.log(this.accountExists);
+            });
+
         }
     }
     
