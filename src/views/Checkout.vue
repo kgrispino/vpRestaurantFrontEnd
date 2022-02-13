@@ -1,5 +1,5 @@
 <template>
-    <form class="form-bg">
+    <form class="form-bg" @submit.prevent="sendCart">
     
         <div v-for="item in this.cart" :key="item.name">
             <p>{{ item.name }} <br>
@@ -10,13 +10,15 @@
             
         </div>
         <div class="submit">
-            <button @click="sendCart"> Checkout </button>
+            <button> Checkout </button>
         </div>
 
     </form>
 
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return{
@@ -31,7 +33,22 @@ export default {
     },
     methods: {
         sendCart(){
-            console.log(this.cart[0].name)
+            //token has username in it
+            localStorage.setItem("cart", JSON.stringify(this.cart));
+
+            var token = localStorage.getItem("token");
+            var cart = localStorage.getItem("cart");
+            console.log(this.cart);
+            var payload = {"token": token, "cart": cart};
+            axios.post("http://localhost:8080/api/purchase/sendCart", payload)
+            .then(Response => {
+                if (Response.data == true){
+                    console.log("Success");
+                }
+                else{
+                    console.log("Failure to send cart");
+                }
+            })
 
         },
         removeFromCart(itemId){
