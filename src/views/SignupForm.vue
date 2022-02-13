@@ -3,15 +3,15 @@
         <form class="form-bg" @submit.prevent="addAccount" >
             <h1> Sign Up Form</h1>
             <div class="textbox-center">
+                <!-- <div class=form-spacing>
+                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required v-model="account.role"><br>
+                </div> -->
                 <div class=form-spacing>
-                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required v-model="account.first_name"><br>
+                    <input type="text" id="username" name="username" placeholder="Username" required v-model="account.username"><br>
                 </div>
-                <div class=form-spacing>
-                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required v-model="account.last_name"><br>
-                </div>
-                <div class=form-spacing>
+                <!-- <div class=form-spacing>
                     <input type="email" id="email" name="email" placeholder="Email" required v-model="account.email"><br>
-                </div>
+                </div> -->
                 <div class=form-spacing>
                     <input type="password" id="password" name="password" placeholder="Password" required v-model="account.password"><br>
                 </div>
@@ -50,13 +50,14 @@ export default {
     },
     methods: {
         addAccount(){
-            var check_email = this.account.email;
-            console.log(check_email);
-            axios.get("http://localhost:8080/api/accounts/" + check_email).then(response => {
+            axios.post("http://localhost:8080/api/accounts/avail", this.account).then(response => {
             var accountExists = response.data;
+            console.log(response.data)
             if (accountExists == false){
-                axios.post("http://localhost:8080/api/accounts", this.account)
-                    .then(console.log("Account Created"))
+                axios.post("http://localhost:8080/api/accounts/create", this.account)
+                    .then(response => {
+                        console.log(response.data);
+                    })
             }
             else{
                 console.log("Account already exists");

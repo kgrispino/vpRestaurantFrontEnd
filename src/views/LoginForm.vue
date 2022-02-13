@@ -4,7 +4,7 @@
             <h1> Log In</h1>
             <div class="textbox-center">
                 <div class=form-spacing>
-                    <input type="email" id="email" name="email" placeholder="Email" required v-model="account.email"><br>
+                    <input type="text" id="username" name="username" placeholder="Username" required v-model="account.username"><br>
                 </div>
                 <div class=form-spacing>
                     <input type="password" id="password" name="password" placeholder="Password" required v-model="account.password"><br>
@@ -37,22 +37,13 @@ export default {
     },
     methods: {
         checkAccount(){
-            var check_email = this.account.email;
-            var check_pass = this.account.password;
-            console.log(check_email);
-            axios.get("http://localhost:8080/api/accounts/validate/" + check_email + "/" + check_pass).then(response => {
-            var accountExists = response.data;
-            if (accountExists == true){
-                console.log("Logged In")
-                //Store email for use
-                localStorage.setItem("loginEmail", this.account.email);
-            }
-            else{
-                console.log("Account details wrong");
-            }
+            axios.post("http://localhost:8080/api/accounts/authenticate/", this.account).then(response => {
+                console.log(response.data.token)
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('username', this.account.username)
             })
             .catch(e => {
-            console.log(e);});
+            console.log(e, "Account Details wrong or Doesn't Exist");});
         }
     }
     

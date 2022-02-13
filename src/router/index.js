@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import SignupForm from '../views/SignupForm.vue'
 import LoginForm from '../views/LoginForm'
 import Menu from '../views/Menu'
+import Checkout from '../views/Checkout'
 // import { component } from 'vue/types/umd'
 
 Vue.use(VueRouter)
@@ -30,6 +31,11 @@ const routes = [
     path: '/menu',
     name: 'Menu',
     component: Menu
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout
   },
   {
     path: '/about',
