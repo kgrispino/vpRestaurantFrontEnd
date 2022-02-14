@@ -44,9 +44,11 @@ export default {
         }
     },
     mounted(){
-        this.getAccounts();
+        //Debug call
+        // this.getAccounts();
     },
     methods: {
+        //Add account to backend 
         addAccount(){
             axios.post("http://localhost:8080/api/accounts/avail", this.account).then(response => {
             this.accountExists = response.data;
@@ -64,6 +66,7 @@ export default {
             .catch(e => {
             console.log(e);});
         },
+        //fetch accounts from backend
         getAccounts(){
             axios.get("http://localhost:8080/api/accounts")
             .then(response => (this.accounts = response.data))
@@ -100,20 +103,20 @@ export default {
         }
     }
 
-.form-spacing{
-    padding: 10px;
-}
-input{
-    width: 100%;
-}
+    .form-spacing{
+        padding: 10px;
+    }
+    input{
+        width: 100%;
+    }
 
-.login-dialog {
-    padding-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-.error {
-    color:red;
+    .login-dialog {
+        padding-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    .error {
+        color:red;
 }
 </style>

@@ -29,6 +29,7 @@ export default {
             errorMessage: ""
         }
     },
+    //Load products on page load
     mounted(){
         this.getProducts();
     },
@@ -63,6 +64,7 @@ export default {
                 this.error = true;
             }
         },
+        //Put products in cart and redirect to checkout
         goToCheckout(){
             this.cart = [];
             var prodList = {};

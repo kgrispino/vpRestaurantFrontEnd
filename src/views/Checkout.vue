@@ -1,6 +1,9 @@
 <template>
     <div>
+        <!-- Error message  -->
         <h1 class="error center" v-if="error == true"> {{ errorMessage }}</h1>
+
+        <!-- Cycle through all items in cart and display with input to change amount or remove entirely  -->
         <form class="form-bg" @submit.prevent="sendCart">
             <div v-for="item in this.cart" :key="item.name">
                 <p>{{ item.name }} <br>
@@ -14,6 +17,7 @@
                 <button> Checkout </button>
             </div>
         </form>
+        <!-- Cart sent to backend -->
         <h1 class="success center" v-if="success == true"> {{ successMessage }}</h1>
     </div>
 
@@ -32,12 +36,14 @@ export default {
         }
         
     },
+    // Load the cart on page load
     mounted(){
         let cartArr = localStorage.getItem("cart");
         this.cart = JSON.parse(cartArr);
         console.log(this.cart);
     },
     methods: {
+        //Send cart to backend
         sendCart(){
             this.success = false;
             //token has username in it
@@ -74,6 +80,7 @@ export default {
             }
             
         },
+        //Remove item from cart by itemID
         removeFromCart(itemId){
             const cartItems = JSON.parse(localStorage.getItem("cart"));
             const loc = cartItems.findIndex(({ index }) => index === itemId);
@@ -89,7 +96,6 @@ export default {
     .submit{
         width: 100%;
     }
-
     .grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

@@ -38,6 +38,7 @@ export default {
 
     },
     methods: {
+        //Send token and username and validate this is the correct user and redirect to menu
         checkAccount(){
             axios.post("http://localhost:8080/api/accounts/authenticate/", this.account).then(response => {
                 console.log(response.data.token)

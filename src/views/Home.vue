@@ -16,6 +16,7 @@ export default {
       user: "Please sign in"
     }
   },
+  //Load welcome on page load
   mounted(){
     this.getUser();
   },
@@ -30,7 +31,7 @@ export default {
                     this.user = name;
                 }
                 else{
-                  console.log("please sign in");
+                  this.user = "Please sign in";
                 }
             }
             )
@@ -41,12 +42,12 @@ export default {
 
 
  <style scoped>
-.home{
-  width: 50%;
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
+  .home{
+      width: 50%;
+      padding-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+  }
 
  </style>
